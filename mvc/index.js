@@ -18,9 +18,20 @@ var	Generator = require('yeoman-generator');
 var MVCGenerator = module.exports = Generator.extend({
 
     initialize: function() {
-        this.composeWith('joomla-component:model ' + this.name);
-        this.composeWith('joomla-component:view ' + this.name);
-        this.composeWith('joomla-component:controller ' + this.name);
+		//this.argument('name', { type: String, required: true });
+		var name = this.options._.length > 0 ? this.options._[0] : this.options.name;
+
+        this.composeWith(require.resolve('../model'), {
+            name: name
+        });
+
+        this.composeWith(require.resolve('../view'), {
+            name: name
+        });
+
+        this.composeWith(require.resolve('../controller'), {
+            name: name
+        });
     }
 
 });

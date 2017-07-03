@@ -22,8 +22,7 @@ var _ = require('underscore.string');
 var ViewGenerator = module.exports = yeoman.extend({
 
     main: function() {
-        this.argument('name', { type: String, required: true });
-        this.name = this.options.name;
+		this.name = typeof this.options.name != 'undefined' ? this.options.name : this.options._[0];
 
         var pkg = require(path.join(process.cwd(), './package.json'));
 
