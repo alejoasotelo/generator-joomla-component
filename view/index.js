@@ -49,7 +49,7 @@
 
     ViewGenerator.prototype.generateView = function() {
       this.template("_view.html.php", "views/" + this.viewFolderName + "/view.html.php");
-      return this.template("_default.php", "views/" + this.viewFolderName + "/default.php");
+      return this.template("_default.php", "views/" + this.viewFolderName + "/tmpl/default.php");
     };
 
     return ViewGenerator;
