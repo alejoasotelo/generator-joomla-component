@@ -47,12 +47,13 @@ $ yo joomla-component
 ```
 
 ## Subgenerators
-There are currently **4** subgenerators:
+There are currently **5** subgenerators:
 
 1. *model*: ``yo joomla-component:model "model-name"``
 2. *view*: ``yo joomla-component:view "view-name"``
 3. *controller*: ``yo joomla-component:controller "controller-name"``
 4. *helper*: ``yo joomla-component:helper "helper-name"``
+5. *model-view-controller*: ``yo joomla-component:mvc "name"``
 
 Each generator creates a new file with phpdocumentor and joomla standards, packaged and subpackaged as needed
 

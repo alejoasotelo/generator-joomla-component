@@ -12,6 +12,11 @@
     "email": "seangores@gmail.com",
     "url": "https://github.com/srsgores"
   },
+  "colaborator": {
+    "name": "Alejo Sotelo",
+    "email": "soporte@alejosotelo.com.ar",
+    "url": "https://github.com/alejoasotelo"
+  },
   "main": "app/index.js",
   "repository": {
     "type": "git",
