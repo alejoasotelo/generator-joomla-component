@@ -15,7 +15,7 @@ defined('_JEXEC') or die;
  * @package     <%= _.slugify(componentName) %>
  * @subpackage  <%= _.slugify(name) %>
  */
-class <%= _.slugify(modelName) %> extends JModel
+class <%= modelClassName %> extends JModel
 {
 	// TODO: Class logic for <%= _.slugify(modelName) %>
 }

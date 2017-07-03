@@ -2,8 +2,11 @@
  Author: Sean Goresht
  www: http://seangoresht.com/
  github: https://github.com/srsgores
-
  twitter: http://twitter.com/S.Goresht
+
+ Modified by: Alejo Sotelo
+ Web: http://alejosotelo.com.ar
+ github: https://github.com/alejoasotelo
 
  generator-joomla-component
  Do What the Fuck You Want License
@@ -16,30 +19,41 @@
 
 'use strict';
 
-var util = require('util'),
-	yeoman = require('yeoman-generator'),
-	path = require('path');
+var yeoman = require('yeoman-generator');
+var path = require('path');
+var _ = require('underscore.string');
 
-var ModelGenerator = module.exports = function ModelGenerator(args, options, config) {
-	// By calling `NamedBase` here, we get the argument to the subgenerator call as `this.name`.
-	yeoman.generators.NamedBase.apply(this, arguments);
+var ModelGenerator = module.exports = yeoman.extend({
 
-	console.log('You called the model subgenerator with the argument ' + this.name + '.');
-};
+	main: function() {
+		this.argument('name', { type: String, required: true });
+		this.name = this.options.name;
 
-util.inherits(ModelGenerator, yeoman.generators.NamedBase);
+		var pkg = require(path.join(process.cwd(), './package.json'));
 
-ModelGenerator.prototype.files = function files() {
-	var pkg = JSON.parse(this.readFileAsString(path.join(process.cwd(), './package.json'))),
-		currentDate = new Date().getUTCDate();
-	this.componentName = 		pkg.componentName;
-	this.description = 			pkg.description;
-	this.requireManageRights = 	pkg.requireManageRights;
-	this.authorName = 			pkg.author.name;
-	this.authorEmail = 			pkg.author.email;
-	this.authorURL = 			pkg.author.url;
-	this.license = 				pkg.licenses[0].type;
-	this.currentDate =			new Date().getUTCDate();
-	this.modelName = 			this.name;
-	this.template('_model.php', 'models/' + this.name + '.php');
-};
+        var modelName = _.slugify(this.name);
+        var modelClassName = _.classify(this.name);
+
+		console.log('Generando model ' + this.name + '.');
+
+		this.fs.copyTpl(
+			this.templatePath('_model.php'),
+			this.destinationPath('models/' + modelName + '.php'),
+			{
+                _: _,
+				name: 					this.name,
+				componentName: 			pkg.componentName,
+				description:			pkg.description,
+				requireManageRights:	pkg.requireManageRights,
+				authorName:	 			pkg.author.name,
+				authorEmail:	 		pkg.author.email,
+				authorURL: 				pkg.author.url,
+				license: 				pkg.licenses[0].type,
+				currentDate:			new Date().getUTCDate(),
+				modelName: 				modelName,
+				modelClassName:			modelClassName
+			}
+		);
+	}
+
+});

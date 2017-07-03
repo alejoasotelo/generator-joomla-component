@@ -7,54 +7,50 @@
 
 	@author Sean Goresht
 
+    Modified by: Alejo Sotelo
+    Web: http://alejosotelo.com.ar
+    github: https://github.com/alejoasotelo
+
 	@note uses Codoc
 	@see https://github.com/mklabs/yeoman/wiki/generators coffeescript with yeoman
 	@see https://github.com/coffeedoc/codo
  */
+ 'use strict';
 
-(function() {
-  "use strict";
-  var HelperGenerator, path, yeoman,
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+ var yeoman = require('yeoman-generator');
+ var path = require('path');
+ var _ = require('underscore.string');
 
-  yeoman = require("yeoman-generator");
+ var HelperGenerator = module.exports = yeoman.extend({
 
-  path = require("path");
+     main: function() {
+         this.argument('name', { type: String, required: true });
+         this.name = this.options.name;
 
+         var pkg = require(path.join(process.cwd(), './package.json'));
 
-  /*
-  	@class HelperGenerator sub-generator for joomla component controllers
-   */
+         var helperName = _.slugify(this.name);
+         var helperClassName = _.classify(this.name);
+         console.log("You called the helper subgenerator with the argument " + this.name + ".\nNow let's create that helper as helpers/" + this.helperName + ".php for you...");
 
-  module.exports = HelperGenerator = (function(_super) {
-    __extends(HelperGenerator, _super);
+         this.fs.copyTpl(
+             this.templatePath('_helper.php'),
+             this.destinationPath('helpers/' + helperName + '.php'),
+             {
+                 _: _,
+                 name: 					this.name,
+                 componentName: 		pkg.componentName,
+                 description:			pkg.description,
+                 requireManageRights:	pkg.requireManageRights,
+                 authorName:	 		pkg.author.name,
+                 authorEmail:	 		pkg.author.email,
+                 authorURL: 			pkg.author.url,
+                 license: 				pkg.licenses[0].type,
+                 currentDate:			new Date().getUTCDate(),
+                 helperName: 			helperName,
+                 helperClassName:		helperClassName
+             }
+         );
+     }
 
-    function HelperGenerator(args, options, config) {
-      var pkg, _ref, _ref1, _ref2, _ref3;
-      HelperGenerator.__super__.constructor.call(this, args, options, config);
-      pkg = JSON.parse(this.readFileAsString(path.join(process.cwd(), "./package.json")));
-      this.componentName = pkg.componentName;
-      this.description = pkg.description;
-      this.requireManageRights = pkg.requireManageRights;
-      this.authorName = (_ref = pkg.author) != null ? _ref.name : void 0;
-      this.authorEmail = (_ref1 = pkg.author) != null ? _ref1.email : void 0;
-      this.authorURL = (_ref2 = pkg.author) != null ? _ref2.url : void 0;
-      this.license = (_ref3 = pkg.licenses[0]) != null ? _ref3.type : void 0;
-      this.currentDate = new Date().getFullYear();
-      this.helperName = this._.slugify(this.name);
-      this.helperClassName = this._.classify(this.name);
-      console.log("You called the helper subgenerator with the argument " + this.name + ".\nNow let's create that helper as helpers/" + this.helperName + ".php for you...");
-    }
-
-    HelperGenerator.prototype.generateHelper = function() {
-      return this.template("_helper.php", "helpers/" + this.helperName + ".php");
-    };
-
-    return HelperGenerator;
-
-  })(yeoman.generators.NamedBase);
-
-}).call(this);
-
-//# sourceMappingURL=index.map
+ });
