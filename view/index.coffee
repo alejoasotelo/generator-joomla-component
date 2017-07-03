@@ -36,4 +36,4 @@ module.exports = class ViewGenerator extends yeoman.generators.NamedBase
 		"""
 	generateView: ->
 		@template "_view.html.php", "views/#{@viewFolderName}/view.html.php"
-		@template "_default.php", "views/#{@viewFolderName}/default.php"
+		@template "_default.php", "views/#{@viewFolderName}/tmpl/default.php"
