@@ -18,6 +18,6 @@ defined('_JEXEC') or die;
  * @author		<%= authorName %> <<%= authorEmail %>>
  * TODO: Describe your helper here
  */
-class <%= helperClassName %>Helper {
+class <%= _.classify(componentName) %>Helper<%= helperClassName %>Helper {
 	// TODO: place helper methods here
 }
