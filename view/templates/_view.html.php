@@ -18,7 +18,7 @@ defined('_JEXEC') or die;
  * @author		<%= authorName %> <<%= authorEmail %>>
  * TODO: Describe your view here
  */
-class <%= viewClassName %>View<%= _.classify(componentName) %> extends JViewLegacy {
+class <%= _.classify(componentName) %>View<%= viewClassName %> extends JViewLegacy {
 	// TODO: place attributes here: ex. $protected $items;
 
 	/**
